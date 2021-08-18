@@ -81,30 +81,39 @@ fs.readFile(usersPath, (err, data) => {
         return;
     }
 
-    const usersData = JSON.parse(data)
+    const usersData = JSON.parse(data);
 
-    for (let i = 0; i < usersData.length; i++) {
-        const pathYoungMan = path.join(mkDirPath, 'manYounger20', `${usersData[i].name}.json`);
-        const pathOldMan = path.join(mkDirPath, 'manOlder20', `${usersData[i].name}.json`);
-        const pathYoungWoman = path.join(mkDirPath, 'womanYounger20', `${usersData[i].name}.json`);
-        const pathOldWoman = path.join(mkDirPath, 'womanOlder20', `${usersData[i].name}.json`);
+    usersData.forEach( user => {
+        const pathYoungMan = path.join(mkDirPath, 'manYounger20', `${user.name}.json`);
+        const pathOldMan = path.join(mkDirPath, 'manOlder20', `${user.name}.json`);
+        const pathYoungWoman = path.join(mkDirPath, 'womanYounger20', `${user.name}.json`);
+        const pathOldWoman = path.join(mkDirPath, 'womanOlder20', `${user.name}.json`);
 
-        if (usersData[i].age < 20 && usersData[i].gender === 'male') {
-            fs.writeFile(pathYoungMan, JSON.stringify(usersData[i]), err1 => {
+        if (user.age < 20 && user.gender === 'male') {
+            fs.writeFile(pathYoungMan, JSON.stringify(user), err1 => {
                 console.log(err1);
             });
-        } else if (usersData[i].age > 20 && usersData[i].gender === 'male') {
-            fs.writeFile(pathOldMan, JSON.stringify(usersData[i]), err2 => {
+            return;
+        }
+
+        if (user.age > 20 && user.gender === 'male') {
+            fs.writeFile(pathOldMan, JSON.stringify(user), err2 => {
                 console.log(err2);
             });
-        } else if (usersData[i].age < 20 && usersData[i].gender === 'female') {
-            fs.writeFile(pathYoungWoman, JSON.stringify(usersData[i]), err3 => {
+            return;
+        }
+
+        if (user.age < 20 && user.gender === 'female') {
+            fs.writeFile(pathYoungWoman, JSON.stringify(user), err3 => {
                 console.log(err3);
             });
-        } else if (usersData[i].age > 20 && usersData[i].gender === 'female') {
-            fs.writeFile(pathOldWoman, JSON.stringify(usersData[i]), err4 => {
+            return;
+        }
+
+        if (user.age > 20 && user.gender === 'female') {
+            fs.writeFile(pathOldWoman, JSON.stringify(user), err4 => {
                 console.log(err4);
         })
         }
-    }
+    })
 });
