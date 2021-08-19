@@ -50,32 +50,42 @@ app.get('/', (req, res) => {
 //     res.end();
 
     // status - можна передавати статус кода/помилок
-   res.status(404).end('Not Found');
+    res.status(404).end('Not Found');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', {isMale: true});
 });
 
 // на лінці /users  прорендери view = 'users.hbs', розширення .hbs вказувати не потрібно, бо ми задали опції в 18-28 строках
 app.get('/users', (req, res) => {
     res.render('users', {userName: 'Viktor', users});
 });
-app.get('/login', (req, res) => {
-    res.render('login');
+
+app.get('/users/:user_id', (req, res) => {
+    const {user_id} = req.params;
+    // req.query - динамічні параметри які можуть як бути так і ні(тобто ми їх не очікуємо, але можемо відслідкувати)
+    console.log(req.query);
+    const currentUser = users[user_id];
+
+    if (!currentUser) {
+        res.status(404).end('User Not Found');
+        return;
+    }
+    res.json(currentUser);
 });
 
 app.post('/auth', (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const {name, password} = req.body;
-    res.json('LOGIN');
+    res.json(`Hello ${name}` );
     // не можливо відправити 2 респонса, буде помилка, це аналогічно як з одним return
     // res.json('hello');
 });
 
-app.get('/users/:user_id', (req, res) => {
-    res.json(users[0])
-})
-
 
 //навішуємо прослуховувача, адреса буде localhost:5000
 app.listen(PORT, () => {
-    console.log('App listen',  PORT);
+    console.log('App listen', PORT);
 })
 // після запуску сервера, консоль стає мертва, дo тих пір поки ми не зупинимо сервер ctrl+C

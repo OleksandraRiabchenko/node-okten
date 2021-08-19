@@ -9,6 +9,15 @@
 </head>
 <body>
 
+<!--if як умову приймає тільки true/false і більше нічого-->
+{{#if isMale}}
+<div>Hello Man</div>
+{{else}}
+<div>Hello Girl</div>
+{{/if}}
+
+
+
 <form action="/auth" method="post">
     <input type="text" name="name" >
     <input type="text" name="password" >
