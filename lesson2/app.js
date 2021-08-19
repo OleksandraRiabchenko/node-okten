@@ -1,4 +1,4 @@
-// імпортуємо експресс
+// імпортуємо експресс (alt+enter) потім робимо реквайр
 const express = require('express');
 // після iмпорту в консолі express-handlebars потрібно реквайрити в змінну
 const expressHbs = require('express-handlebars');
