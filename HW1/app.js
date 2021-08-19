@@ -56,29 +56,12 @@ const folderWithBoys = path.join(__dirname, '2000');
 //     })
 // })
 
-function splitGender(mainPath, gender) {
-   fs.readdir(mainPath, (err, files) => {
-       if(err) {
-           console.log(err);
-           return;
-       }
-       files.forEach(file => {
-           fs.readFile(path.join(mainPath, file), (err1, data) => {
-               if (err1) {
-                console.log(err1);
-                return;
-            }
-               if (JSON.parse(data).gender === gender) {
-//                 const newFileName = path.join(mainPath, `${JSON.parse(data).name}.json`);
-           })
-       }
-   })
-}
+
 // Practice1
 
-// const mkDirPath = path.join(__dirname, 'practice1');
-// const usersPath = path.join(__dirname, 'practice1', 'users.json');
-//
+const mkDirPath = path.join(__dirname, 'practice1');
+const usersPath = path.join(__dirname, 'practice1', 'users.json');
+
 // fs.mkdir(path.join(mkDirPath, 'manOlder20'), err => {
 //     console.log(err);
 // })
@@ -92,36 +75,42 @@ function splitGender(mainPath, gender) {
 //     console.log(err);
 // })
 //
-// fs.readFile(usersPath, (err, data) => {
-//     if (err) {
-//         console.log(err);
-//         return;
-//     }
-//
-//     const usersData = JSON.parse(data)
-//
-//     for (let i = 0; i < usersData.length; i++) {
-//         const pathYoungMan = path.join(mkDirPath, 'manYounger20', `${usersData[i].name}.json`);
-//         const pathOldMan = path.join(mkDirPath, 'manOlder20', `${usersData[i].name}.json`);
-//         const pathYoungWoman = path.join(mkDirPath, 'womanYounger20', `${usersData[i].name}.json`);
-//         const pathOldWoman = path.join(mkDirPath, 'womanOlder20', `${usersData[i].name}.json`);
-//
-//         if (usersData[i].age < 20 && usersData[i].gender === 'male') {
-//             fs.writeFile(pathYoungMan, JSON.stringify(usersData[i]), err1 => {
-//                 console.log(err1);
-//             });
-//         } else if (usersData[i].age > 20 && usersData[i].gender === 'male') {
-//             fs.writeFile(pathOldMan, JSON.stringify(usersData[i]), err2 => {
-//                 console.log(err2);
-//             });
-//         } else if (usersData[i].age < 20 && usersData[i].gender === 'female') {
-//             fs.writeFile(pathYoungWoman, JSON.stringify(usersData[i]), err3 => {
-//                 console.log(err3);
-//             });
-//         } else if (usersData[i].age > 20 && usersData[i].gender === 'female') {
-//             fs.writeFile(pathOldWoman, JSON.stringify(usersData[i]), err4 => {
-//                 console.log(err4);
-//         })
-//         }
-//     }
-// });
+fs.readFile(usersPath, (err, data) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    const userData = JSON.parse(data);
+
+    userData.forEach(user =>  {
+        const pathYoungMan = path.join(mkDirPath, 'manYounger20', `${user.name}.json`);
+        const pathOldMan = path.join(mkDirPath, 'manOlder20', `${user.name}.json`);
+        const pathYoungWoman = path.join(mkDirPath, 'womanYounger20', `${user.name}.json`);
+        const pathOldWoman = path.join(mkDirPath, 'womanOlder20', `${user.name}.json`);
+
+        if (user.age < 20 && user.gender === 'male') {
+            fs.writeFile(pathYoungMan, JSON.stringify(user), err1 => {
+                console.log(err1);
+            });
+        } return;
+
+        if (user.age > 20 && user.gender === 'male') {
+            fs.writeFile(pathOldMan, JSON.stringify(user), err2 => {
+                console.log(err2);
+            });
+        } return;
+
+        if (user.age < 20 && user.gender === 'female') {
+            fs.writeFile(pathYoungWoman, JSON.stringify(user), err3 => {
+                console.log(err3);
+            });
+        } return;
+
+        if (user.age > 20 && user.gender === 'female') {
+            fs.writeFile(pathOldWoman, JSON.stringify(user), err4 => {
+                console.log(err4);
+        })
+        }
+    })
+});
