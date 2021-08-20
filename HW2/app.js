@@ -21,36 +21,9 @@ app.get('/', (req, res) => {
     res.render('firstPage');
 })
 
-// app.get('/registration', (req, res) => {
-//     res.render('registration');
-// })
-//
-// app.post('/login', (req, res) => {
-//     const userExist = users.some(user => user.email === req.body.email);
-//
-//     if (userExist) {
-//         res.status(409).end('User with such mail exists');
-//         return;
-//     }
-//
-//     users.push(req.body);
-//     res.render('login');
-// });
-//
-// app.post('/users/:user_id', (req, res) => {
-//     const user = users.find(user => user.email === req.body.email && user.password === req.body.password);
-//
-//     if (!user) {
-//         res.status(404).end('User Not Found');
-//         return;
-//     }
-//
-//     res.render('userPage', {user});
-// });
-//
-// app.get('/users', (req, res) => {
-//     res.render('users', {users});
-// });
+app.get('/registration', (req, res) => {
+    res.render('registration');
+})
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -92,6 +65,7 @@ app.get('/users/:user_id', (req, res) => {
     if (!user) {
         res.status(404).end('User Not Found');
         return;
+
     }
 
     res.render('userPage', {user});
