@@ -25,20 +25,40 @@ app.get('/registration', (req, res) => {
     res.render('registration');
 })
 
-app.post('/login', (req, res) => {
-    const userExist = users.some(user => user.email === req.body.email);
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (!user) {
+        res.status(409).end('Wrong email or password !');
+        return;
+    }
+
+    res.redirect('users');
+});
+
+app.post('/users', (req, res) => {
+    const { email } = req.body;
+
+    const userExist = users.some(user => user.email === email);
+
+    console.log(userExist)
     if (userExist) {
-        res.status(409).end('User with such mail exists');
+        res.status(404).end('User exist, choose any email');
         return;
     }
 
     users.push(req.body);
-    res.render('login');
+    res.redirect('login');
 });
 
-app.post('/users/:user_id', (req, res) => {
-    const user = users.find(user => user.email === req.body.email && user.password === req.body.password);
+app.get('/users/:user_id', (req, res) => {
+    const { user_id } = req.params;
+    const user = users.find((user, i) => i === +user_id);
 
     if (!user) {
         res.status(404).end('User Not Found');
