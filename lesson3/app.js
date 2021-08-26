@@ -10,24 +10,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const userRouter = require('./routes/user.router');
+const {authRouter, userRouter} = require('./routes');
 
-app.get('ping', (req, res) => {res.json('Pong')});
+app.get('ping', (req, res) => res.json('Pong'));
 
-app.get('/', (req, res) => {
-    console.log(req);
-    res.status(404).end('Not Found');
-});
-
+app.use('/auth', authRouter);
 app.use('/users', userRouter);
 
-
-app.post('/auth', (req, res) => {
-
-    const {name, password} = req.body;
-    res.json(`Hello ${name}` );
-
-});
 
 app.listen(PORT, () => {
     console.log('App listen', PORT);
