@@ -1,11 +1,31 @@
 const { PATH_USERS } = require('../config/variables');
-const { getUsersFromDb } = require('../services/user.service');
+const { getUsersFromDb, addUsersToDb } = require('../services/user.service');
 
 module.exports = {
-    // createUser: (req, res) => {
-    //
-    // },
-    //
+    createUser: async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            const users = await getUsersFromDb(PATH_USERS);
+
+            const userExist = users.some((user) => user.email === email);
+
+            if (userExist) {
+                res.status(404).end('User exist, choose any email');
+                return;
+            }
+
+            const lastId = users[users.length - 1].user_id;
+            const user_id = lastId + 1;
+
+            users.push({ user_id, email, password });
+            await addUsersToDb(PATH_USERS, users);
+
+            res.status(201).redirect('/login');
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    },
+
     getAllUsers: async (req, res) => {
         try {
             const users = await getUsersFromDb(PATH_USERS);
