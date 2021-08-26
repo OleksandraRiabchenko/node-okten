@@ -6,9 +6,14 @@ module.exports = {
     //
     // },
     //
-    // getAllUsers: (req, res) => {
-    //
-    // },
+    getAllUsers: async (req, res) => {
+        try {
+            const users = await getUsersFromDb(PATH_USERS);
+            res.json(users);
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    },
 
     getUserById: async (req, res) => {
         try {
