@@ -10,16 +10,20 @@ module.exports = {
     //
     // },
 
-    getUserById: (req, res) => {
-        const { user_id } = req.params;
-        const users = getUsersFromDb(PATH_USERS);
-        const user = users.find((u) => u.user_id === +user_id);
+    getUserById: async (req, res) => {
+        try {
+            const { user_id } = req.params;
+            const users = await getUsersFromDb(PATH_USERS);
+            const user = users.find((u) => u.user_id === +user_id);
 
-        if (!user) {
-            res.status(404).end('User Not Found');
+            if (!user) {
+                res.status(404).end('User Not Found');
 
-            return;
+                return;
+            }
+            res.json(user);
+        } catch (e) {
+            res.status(500).json(e.message);
         }
-        res.json(user);
     }
 };

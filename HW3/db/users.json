@@ -1,22 +1,22 @@
 [
   {
     "user_id": 1,
-    "email": "qweasd@gmail.com",
+    "email": "olya@gmail.com",
     "password": "123098"
   },
   {
     "user_id": 2,
-    "email": "asdzxc@gmail.com",
+    "email": "vasya@gmail.com",
     "password": "asdfgh"
   },
   {
     "user_id": 3,
-    "email": "qwerty@gmail.com",
+    "email": "kolya@gmail.com",
     "password": "111111"
   },
   {
     "user_id": 4,
-    "email": "myname@gmail.com",
+    "email": "petya@gmail.com",
     "password": "pa$$w0rd"
   }
 ]
