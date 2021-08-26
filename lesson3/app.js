@@ -1,9 +1,6 @@
 const express = require('express');
-const expressHbs = require('express-handlebars');
-const path = require('path');
 
 const {PORT} = require('./config/variables');
-const users = require('./db/users');
 
 const app = express();
 
