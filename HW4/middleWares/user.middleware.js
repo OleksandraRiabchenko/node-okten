@@ -14,13 +14,12 @@ module.exports = {
             }
 
             req.user = user;
-            req.testParam = 'Hello';
-
             next();
         } catch (e) {
             next(e);
         }
     },
+
     checkUniqueEmail: async (req, res, next) => {
         try {
             const { email } = req.body;
