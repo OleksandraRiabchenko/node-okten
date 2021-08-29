@@ -14,6 +14,13 @@ const userSchema = new Schema({
         required: true,
         trim: true
     },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        // todo щоб не відображався пароль
+        // select: false
+    },
     role: {
         type: String,
         default: userRolesEnam.USER,

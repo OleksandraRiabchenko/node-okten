@@ -1,31 +1,38 @@
 const User = require('../dataBase/User');
+const passwordService = require('../service/password.service');
+const { userNormalizator } = require('../utils/user.util');
 
 module.exports = {
     getSingleUser: (req, res, next) => {
         try {
-            // if (role !== 'admin') {
-            //     throw new ErrorHandler(403, 'Access Denied');
-            // }
+            const userToNorm = userNormalizator(req.user);
 
-            const { user } = req;
-
-            res.json(user);
+            res.json(userToNorm);
         } catch (e) {
-            // NOT GOOD
-            // res.status(400).json(e.message());
             next(e);
         }
     },
 
-    // getAllUser: (req, res) => {
-    //
-    // },
+    getAllUser: async (req, res, next) => {
+        try {
+            const users = await User.find();
+
+            res.json(users);
+        } catch (e) {
+            next(e);
+        }
+    },
 
     createUser: async (req, res, next) => {
         try {
-            const createdUser = await User.create(req.body);
+            const { password } = req.body;
 
-            res.json(createdUser);
+            const hashedPassword = await passwordService.hashPassword(password);
+            const createdUser = await User.create({ ...req.body, password: hashedPassword });
+
+            const userToNorm = userNormalizator(createdUser);
+
+            res.json(userToNorm);
         } catch (e) {
             next(e);
         }
@@ -33,6 +40,7 @@ module.exports = {
     deleteUser: async (req, res, next) => {
         try {
             const { user_id } = req.params;
+
             await User.deleteOne({ _id: user_id });
 
             res.status(204).json(`User with id ${user_id} is deleted`);
