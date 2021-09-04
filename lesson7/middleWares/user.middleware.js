@@ -2,28 +2,34 @@ const User = require('../dataBase/User');
 const ErrorHandler = require('../errors/ErrorHandler');
 const userValidator = require('../validators/user.validator');
 
-// middleware приймає 3 аргумента, обов'язково next, він нічого не респонсає тільки передає ПУСТИЙ next(),
-// все що записано в next() сприйається як помилка
 module.exports = {
-    // isUserPresent: async (req, res, next) => {
-    //     try {
-    //         const { user_id } = req.params;
-    //         const user = await User.findById(user_id);
-    //
-    //         console.log(user);
-    //
-    //         if (!user) {
-    //             throw new ErrorHandler(418, 'user not found');
-    //         }
-    //
-    //         req.user = user;
-    //         req.testParam = 'Hello';
-    //
-    //         next();
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // },
+    throwIfUserNotPresent: (req, res, next) => {
+        try {
+            const { user } = req;
+
+            if (!user) {
+                throw new ErrorHandler(404, 'user not found');
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    throwIfUserPresent: (req, res, next) => {
+        try {
+            const { user } = req;
+
+            if (user) {
+                throw new ErrorHandler(409, 'User already exist');
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
 
     checkUniqueEmail: async (req, res, next) => {
         try {
@@ -77,10 +83,6 @@ module.exports = {
             const value = req[searchIn][paramName];
 
             const user = await User.findOne({ [dbField]: value });
-
-            if (!user) {
-                throw new ErrorHandler(404, 'user not found');
-            }
 
             req.user = user;
             next();
