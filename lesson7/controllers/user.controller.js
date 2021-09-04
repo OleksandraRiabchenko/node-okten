@@ -1,5 +1,5 @@
 const User = require('../dataBase/User');
-const passwordService = require('../service/password.service');
+const { passwordService } = require('../service');
 const { userNormalizator } = require('../utils/user.util');
 
 module.exports = {
