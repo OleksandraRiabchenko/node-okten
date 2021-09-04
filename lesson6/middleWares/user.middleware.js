@@ -5,30 +5,25 @@ const userValidator = require('../validators/user.validator');
 // middleware приймає 3 аргумента, обов'язково next, він нічого не респонсає тільки передає ПУСТИЙ next(),
 // все що записано в next() сприйається як помилка
 module.exports = {
-    isUserPresent: async (req, res, next) => {
-        try {
-            const { user_id } = req.params;
-            // const user = await User.findById(user_id).select('_id email ');
-            // const user = await User.findById(user_id).select('-email -role');
-            // const user = await User.findById(user_id).select('+password');
-            // lean() - перетворює об'єкт монги в читаємий json-формат
-            // const user = await User.findById(user_id).lean();
-            const user = await User.findById(user_id);
-
-            console.log(user);
-
-            if (!user) {
-                throw new ErrorHandler(418, 'user not found');
-            }
-            // прокидуємо дані із міддлвари в контролер за допомогою мутування ріквесту
-            req.user = user;
-            req.testParam = 'Hello';
-
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
+    // isUserPresent: async (req, res, next) => {
+    //     try {
+    //         const { user_id } = req.params;
+    //         const user = await User.findById(user_id);
+    //
+    //         console.log(user);
+    //
+    //         if (!user) {
+    //             throw new ErrorHandler(418, 'user not found');
+    //         }
+    //
+    //         req.user = user;
+    //         req.testParam = 'Hello';
+    //
+    //         next();
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // },
 
     checkUniqueEmail: async (req, res, next) => {
         try {
@@ -60,4 +55,37 @@ module.exports = {
             next(e);
         }
     },
+    checkUserRoleMdlwr: (rolesArr = []) => (req, res, next) => {
+        try {
+            const { role } = req.user;
+
+            if (!rolesArr.length) {
+                return next();
+            }
+
+            if (!rolesArr.includes(role)) {
+                throw new ErrorHandler(403, 'Forbidden');
+            }
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getUserbyDynamicParam: (paramName, searchIn = 'body', dbField = paramName) => async (req, res, next) => {
+        try {
+            const value = req[searchIn][paramName];
+
+            const user = await User.findOne({ [dbField]: value });
+
+            if (!user) {
+                throw new ErrorHandler(404, 'user not found');
+            }
+
+            req.user = user;
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
 };

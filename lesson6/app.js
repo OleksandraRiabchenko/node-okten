@@ -2,11 +2,14 @@ const express = require('express');
 // mongoose необхідно зареквайрити
 const mongoose = require('mongoose');
 
-const { PORT } = require('./config/variables');
+// щоб подружити наш проект з дотенв-файлом потрібно після інсталювання законфіжити
+require('dotenv').config();
+
+const { DB_CONNECTION_URL, PORT } = require('./config/variables');
 
 const app = express();
 // ПОТРІБНО ЗРОБИТИ КОННЕКТ, АДРЕСА - mongodb://localhost:27017/назва_бази
-mongoose.connect('mongodb://localhost:27017/apr-2021-okten');
+mongoose.connect(DB_CONNECTION_URL);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +24,8 @@ app.use('*', _notFoundError);
 app.use(_mainErrorHandler);
 
 app.listen(PORT, () => {
+    // щоб побачити всі змінні які зберігаються в .env використовуємо process.env
+    // console.log(process.env);
     console.log('App listen', PORT);
 });
 
