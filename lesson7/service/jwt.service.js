@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const util = require('util');
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = require('../config/variables');
+const ErrorHandler = require('../errors/ErrorHandler');
 
 // jwt.verify приймає асинхронну ф-цію, тому для цього нам потрібно з util затягнути метод промісифікації ф-цій promisify()
 const verifyPromise = util.promisify(jwt.verify);
@@ -19,8 +20,13 @@ module.exports = {
     },
 
     verifyToken: async (token, tokenType = 'access') => {
-        const secret = tokenType === 'access' ? ACCESS_SECRET_KEY : REFRESH_SECRET_KEY;
+        try {
+            const secret = tokenType === 'access' ? ACCESS_SECRET_KEY : REFRESH_SECRET_KEY;
 
-        await verifyPromise(token, secret);
+            await verifyPromise(token, secret);
+        } catch (e) {
+            throw new ErrorHandler(401, 'Invalid token');
+        }
     }
 };
+// В сервісах не потрібно використовувати нічого з req, res, body

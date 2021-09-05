@@ -1,15 +1,16 @@
 const router = require('express').Router();
 
 const { userController } = require('../controllers');
+const { authMiddleware } = require('../middleWares');
 const {
     // checkUniqueEmail,
     validateUserBody,
-    checkUserRoleMdlwr,
+   // checkUserRoleMdlwr,
     getUserbyDynamicParam,
     throwIfUserPresent,
     throwIfUserNotPresent
 } = require('../middleWares/user.middleware');
-const { ADMIN } = require('../config/user-roles.enum');
+// const { ADMIN } = require('../config/user-roles.enum');
 
 router.post(
     '/',
@@ -31,9 +32,10 @@ router.get(
 );
 router.delete(
     '/:user_id',
+    authMiddleware.validateAccessToken,
     getUserbyDynamicParam('user_id', 'params', '_id'),
     throwIfUserNotPresent,
-    checkUserRoleMdlwr([ADMIN]),
+    // checkUserRoleMdlwr([ADMIN]),
     userController.deleteUser
 );
 
