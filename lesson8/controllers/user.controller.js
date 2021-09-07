@@ -1,11 +1,13 @@
 const { User } = require('../dataBase');
-const { passwordService } = require('../service');
+const { passwordService, emailService } = require('../service');
 const { userNormalizator } = require('../utils/user.util');
 
 module.exports = {
-    getSingleUser: (req, res, next) => {
+    getSingleUser: async (req, res, next) => {
         try {
             const userToNorm = userNormalizator(req.user);
+
+            await emailService.sendMail('alryab4enko@gmail.com');
 
             res.json(userToNorm);
         } catch (e) {
