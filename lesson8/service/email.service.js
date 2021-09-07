@@ -1,22 +1,42 @@
+const EmailTemplates = require('email-templates');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 const variables = require('../config/variables');
+const allTemplates = require('../email-templates');
+const ErrorHandler = require('../errors/ErrorHandler');
 
-const sendMail = (userMail) => {
-    const transporter = nodemailer.createTransport({
-        // має бути значення host і port провайдера пошти (gmail, outlook etc.), заміняємо на service gmail
-        service: 'gmail',
-        auth: {
-            user: variables.NO_REPLY_EMAIL,
-            pass: variables.NO_REPLY_EMAIL_PASSWORD
-        }
-    });
+const templateParser = new EmailTemplates({
+    views: {
+        root: path.join(process.cwd(), 'email-templates')
+    }
+});
+
+const transporter = nodemailer.createTransport({
+    // мають бути значення host і port провайдера пошти (gmail, outlook etc.), заміняємо на service gmail
+    service: 'gmail',
+    auth: {
+        user: variables.NO_REPLY_EMAIL,
+        pass: variables.NO_REPLY_EMAIL_PASSWORD
+    }
+});
+
+const sendMail = async (userMail, emailAction, context = {}) => {
+    const templateInfo = allTemplates[emailAction];
+
+    if (!templateInfo) {
+        throw new ErrorHandler(500, 'wrong template name');
+    }
+
+    const { templateName, subject } = templateInfo;
+    const html = await templateParser.render(templateName, context);
 
     return transporter.sendMail({
         from: 'No reply',
         to: userMail,
-        subject: 'hello world',
-        html: ' <h1>HELLO WORLD EMAIL</h1>'
+        subject,
+        // html: html так писати не ок, тому пишемо скорочено, аналогічно з subject
+        html
     });
 };
 

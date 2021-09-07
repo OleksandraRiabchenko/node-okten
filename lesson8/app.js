@@ -24,6 +24,8 @@ app.use('*', _notFoundError);
 app.use(_mainErrorHandler);
 
 app.listen(PORT, () => {
+    // щоб побачити шлях до папки де запускаємо проект можна використати process.cwd()
+    // console.log(process.cwd());
     // щоб побачити всі змінні які зберігаються в .env використовуємо process.env
     // console.log(process.env);
     console.log('App listen', PORT);
