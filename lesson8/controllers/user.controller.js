@@ -8,7 +8,11 @@ module.exports = {
         try {
             const userToNorm = userNormalizator(req.user);
 
-            await emailService.sendMail('alryab4enko@gmail.com', emailActionsEnum.WELCOME, { userNmae: req.user.name });
+            await emailService.sendMail(
+                'alryab4enko@gmail.com',
+                emailActionsEnum.WELCOME,
+                { userNmae: req.user.name }
+            );
 
             res.json(userToNorm);
         } catch (e) {
