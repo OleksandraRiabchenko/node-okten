@@ -11,7 +11,7 @@ module.exports = {
             await emailService.sendMail(
                 'alryab4enko@gmail.com',
                 emailActionsEnum.WELCOME,
-                { userNmae: req.user.name }
+                { userName: req.user.name }
             );
 
             res.json(userToNorm);

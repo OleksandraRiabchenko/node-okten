@@ -1,12 +1,15 @@
 doctype html
 html
     head
+        style
+            include style.css
     body
          div
              | HELLO WORLD
          div
              block content
-         div
+         //        div#id, якщо декілька класів то вони підключаються послідовно через крапку  div.footer.second.third.ets
+         div.footer
              | Best regards
              br
-             a(href="https://google.com") Visit our web site
+             a(href=FRONTEND_URL) Visit our web site

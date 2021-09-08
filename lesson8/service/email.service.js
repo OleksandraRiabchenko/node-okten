@@ -23,12 +23,18 @@ const transporter = nodemailer.createTransport({
 
 const sendMail = async (userMail, emailAction, context = {}) => {
     const templateInfo = allTemplates[emailAction];
+    console.log(JSON.stringify(allTemplates, null, 2));
+    console.log(emailAction);
 
     if (!templateInfo) {
         throw new ErrorHandler(500, 'wrong template name');
     }
+    console.log(templateInfo);
 
     const { templateName, subject } = templateInfo;
+    // context = { ...context, FRONTEND_URL: variables.FRONTEND_URL };
+    context.FRONTEND_URL = variables.FRONTEND_URL;
+
     const html = await templateParser.render(templateName, context);
 
     return transporter.sendMail({
