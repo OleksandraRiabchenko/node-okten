@@ -1,4 +1,5 @@
 const Joi = require('joi');
+
 const { CURRENT_YEAR, EMAIL_REGEXP, PASSWORD_REGEXP } = require('../config/constants');
 const userRolesEnum = require('../config/user-roles.enum');
 

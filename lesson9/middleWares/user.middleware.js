@@ -99,9 +99,7 @@ module.exports = {
         try {
             const value = req[searchIn][paramName];
 
-            const user = await User.findOne({ [dbField]: value });
-
-            req.user = user;
+            req.user = await User.findOne({ [dbField]: value });
             next();
         } catch (e) {
             next(e);

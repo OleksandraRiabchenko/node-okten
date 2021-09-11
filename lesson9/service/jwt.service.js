@@ -42,7 +42,7 @@ module.exports = {
         const secretWord = _getSecretWordForActionToken(actionType);
 
         // працює і без промісифікації просто verify
-        return verifyPromise(token, secretWord);
+        return jwt.verify(token, secretWord);
     }
 };
 
