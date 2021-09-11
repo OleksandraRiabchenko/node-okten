@@ -50,7 +50,7 @@ module.exports = {
         try {
             const { error, value } = userValidator.createUserValidator.validate(req.body);
 
-            console.log(value);
+            req.body = value;
 
             if (error) {
                 throw new ErrorHandler(400, error.details[0].message);
@@ -61,6 +61,23 @@ module.exports = {
             next(e);
         }
     },
+
+    validateNewPassword: (req, res, next) => {
+        try {
+            const { error, value } = userValidator.passwordValidator.validate(req.body);
+
+            req.body = value;
+
+            if (error) {
+                throw new ErrorHandler(400, error.details[0].message);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
     checkUserRoleMdlwr: (rolesArr = []) => (req, res, next) => {
         try {
             const { role } = req.user;

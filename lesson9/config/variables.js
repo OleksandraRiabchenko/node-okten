@@ -3,6 +3,7 @@ module.exports = {
     PORT: process.env.PORT || 5000,
 
     ACCESS_SECRET_KEY: process.env.ACCESS_SECRET_KEY || 'Secret',
+    FORGOT_PASS_SECRET_KEY: process.env.FORGOT_PASS_SECRET_KEY || 'forgotWord',
     REFRESH_SECRET_KEY: process.env.REFRESH_SECRET_KEY || 'S_2',
 
     NO_REPLY_EMAIL: process.env.NO_REPLY_EMAIL || 'test@example.com',
