@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { userController } = require('../controllers');
-const { authMiddleware } = require('../middleWares');
+const { authMiddleware, fileMiddleware } = require('../middleWares');
 const {
     // checkUniqueEmail,
     validateUserBody,
@@ -15,6 +15,7 @@ const {
 router.post(
     '/',
     validateUserBody,
+    fileMiddleware.checkAvatar,
     // checkUniqueEmail,
     getUserbyDynamicParam('email'),
     throwIfUserPresent,
