@@ -30,23 +30,27 @@ module.exports = {
         }
     },
 
-    createUser: async (req, res, next) => {
+    createUser: (req, res, next) => {
         try {
             // const { password } = req.body;
 
             // const hashedPassword = await passwordService.hashPassword(password);
             // const createdUser = await User.create({ ...req.body, password: hashedPassword });
+            // todo ne zabuti
+            console.log(req.files);
 
             // використовуємо статичний метод зі схеми замість коду вище
-            const createdUser = await User.createUserWithHashPassword(req.body);
-
-            const userToNorm = userNormalizator(createdUser);
-
-            res.json(userToNorm);
+            // const createdUser = await User.createUserWithHashPassword(req.body);
+            //
+            // const userToNorm = userNormalizator(createdUser);
+            //
+            // res.json(userToNorm);
+            res.json({});
         } catch (e) {
             next(e);
         }
     },
+
     deleteUser: async (req, res, next) => {
         try {
             const { user_id } = req.params;

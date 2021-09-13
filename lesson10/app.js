@@ -1,6 +1,8 @@
 const express = require('express');
 // mongoose необхідно зареквайрити
 const mongoose = require('mongoose');
+// необхідно зареквайрити наш express-fileupload
+const expressFileUpload = require('express-fileupload');
 
 // щоб подружити наш проект з дотенв-файлом потрібно після інсталювання законфіжити
 require('dotenv').config();
@@ -13,6 +15,7 @@ mongoose.connect(DB_CONNECTION_URL);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(expressFileUpload());
 
 const { authRouter, userRouter } = require('./routes');
 

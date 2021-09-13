@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 kill && pm2 start lesson9/app.js && pm2 monit"
+    "start": "pm2 kill && pm2 start lesson10/app.js && pm2 monit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.987.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "email-templates": "^8.0.8",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.3.3",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
@@ -24,15 +26,15 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "@types/email-templates": "^8.0.4",
+    "@types/nodemailer": "^6.4.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "husky": "4.3.0",
-    "lint-staged": "^11.1.2",
-    "@types/nodemailer": "^6.4.4",
-    "@types/email-templates": "^8.0.4"
+    "lint-staged": "^11.1.2"
   },
   "husky": {
     "hooks": {
