@@ -12,6 +12,11 @@ const ActionTokenSchema = new Schema({
         required: true,
         ref: USER
     }
-}, { timestamps: true });
+}, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
+
+// prehook mongoose
+ActionTokenSchema.pre('findOne', function() {
+    this.populate('user');
+});
 
 module.exports = model(ActionToken, ActionTokenSchema);

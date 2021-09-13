@@ -17,6 +17,10 @@ const OAuthSchema = new Schema({
         // reference робиться на 'user' це посилання на userSchema
         ref: USER
     }
-}, { timestamps: true });
+}, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
+
+OAuthSchema.pre('findOne', function() {
+    this.populate('user');
+});
 
 module.exports = model(OAuth, OAuthSchema);

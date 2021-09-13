@@ -16,7 +16,7 @@ module.exports = {
 
             await jwtService.verifyToken(access_token);
 
-            const tokenFromDB = await OAuth.findOne({ access_token }).populate('user');
+            const tokenFromDB = await OAuth.findOne({ access_token });
 
             if (!tokenFromDB) {
                 throw new ErrorHandler(401, 'Not valid token');
@@ -37,7 +37,7 @@ module.exports = {
 
             await jwtService.verifyToken(refresh_token, 'refresh');
 
-            const tokenFromDB = await OAuth.findOne({ refresh_token }).populate('user');
+            const tokenFromDB = await OAuth.findOne({ refresh_token });
 
             if (!tokenFromDB) {
                 throw new ErrorHandler(401, 'Not valid token');
@@ -61,7 +61,7 @@ module.exports = {
 
             await jwtService.verifyActionToken(action_token, tokenType);
 
-            const tokenFromDB = await ActionToken.findOne({ token: action_token }).populate('user');
+            const tokenFromDB = await ActionToken.findOne({ token: action_token });
 
             if (!tokenFromDB) {
                 throw new ErrorHandler(401, 'Not valid token');

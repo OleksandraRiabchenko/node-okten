@@ -13,7 +13,14 @@ module.exports = {
         try {
             const { user, body: { password } } = req;
 
-            await passwordService.compare(user.password, password);
+            // methods in Mongoose аппка не знає де він проаисаний, для пошуку методу в даному випадку потрібно йти в схему Юзера
+            user.method();
+            // statics застосовуються до цілої схеми, а не до окремого запису (рекорду)
+            User.testStatic();
+
+            // await passwordService.compare(user.password, password);
+            // method прописанний в модельці
+            await user.comparePassword(password);
 
             const tokenPair = jwtService.generateTokenPair();
 

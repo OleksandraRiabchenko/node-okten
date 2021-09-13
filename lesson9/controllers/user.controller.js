@@ -1,6 +1,6 @@
 const { emailActionsEnum } = require('../config');
 const { User } = require('../dataBase');
-const { passwordService, emailService } = require('../service');
+const { emailService } = require('../service');
 const { userNormalizator } = require('../utils/user.util');
 
 module.exports = {
@@ -32,10 +32,13 @@ module.exports = {
 
     createUser: async (req, res, next) => {
         try {
-            const { password } = req.body;
+            // const { password } = req.body;
 
-            const hashedPassword = await passwordService.hashPassword(password);
-            const createdUser = await User.create({ ...req.body, password: hashedPassword });
+            // const hashedPassword = await passwordService.hashPassword(password);
+            // const createdUser = await User.create({ ...req.body, password: hashedPassword });
+
+            // використовуємо статичний метод зі схеми замість коду вище
+            const createdUser = await User.createUserWithHashPassword(req.body);
 
             const userToNorm = userNormalizator(createdUser);
 
