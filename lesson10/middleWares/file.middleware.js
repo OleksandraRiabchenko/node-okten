@@ -4,14 +4,12 @@ const ErrorHandler = require('../errors/ErrorHandler');
 module.exports = {
     checkAvatar: (req, res, next) => {
         try {
-            const { avatar } = req.files;
-
-            if (!avatar) {
+            if (!req.files || !req.files.avatar) {
                 next();
                 return;
             }
 
-            const { name, size, mimetype } = avatar;
+            const { name, size, mimetype } = req.files.avatar;
 
             if (size > PHOTO_MAX_SIZE) {
                 throw new ErrorHandler(400, `File ${name} is too big`);

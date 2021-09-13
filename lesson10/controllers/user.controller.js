@@ -1,6 +1,6 @@
 const { emailActionsEnum } = require('../config');
 const { User } = require('../dataBase');
-const { emailService } = require('../service');
+const { emailService, s3Service } = require('../service');
 const { userNormalizator } = require('../utils/user.util');
 
 module.exports = {
@@ -30,22 +30,28 @@ module.exports = {
         }
     },
 
-    createUser: (req, res, next) => {
+    createUser: async (req, res, next) => {
         try {
             // const { password } = req.body;
 
             // const hashedPassword = await passwordService.hashPassword(password);
             // const createdUser = await User.create({ ...req.body, password: hashedPassword });
-            // todo ne zabuti
-            console.log(req.files);
 
             // використовуємо статичний метод зі схеми замість коду вище
-            // const createdUser = await User.createUserWithHashPassword(req.body);
-            //
-            // const userToNorm = userNormalizator(createdUser);
-            //
-            // res.json(userToNorm);
-            res.json({});
+            let createdUser = await User.createUserWithHashPassword(req.body);
+
+            if (req.files && req.files.avatar) {
+                const s3Response = await s3Service.uploadFile(req.files.avatar, 'users', createdUser._id);
+                createdUser = await User.findByIdAndUpdate(
+                    createdUser._id,
+                    { avatar: s3Response.Location },
+                    { new: true }
+                );
+            }
+
+            const userToNorm = userNormalizator(createdUser);
+
+            res.json(userToNorm);
         } catch (e) {
             next(e);
         }

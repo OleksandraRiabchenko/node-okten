@@ -27,6 +27,9 @@ const userSchema = new Schema({
         type: String,
         default: userRolesEnam.USER,
         enum: Object.values(userRolesEnam)
+    },
+    avatar: {
+        type: String
     }
 }, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
 // toObject: {virtuals: true}, toJSON: {virtuals: true}
