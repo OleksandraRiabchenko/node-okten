@@ -44,8 +44,9 @@ module.exports = {
                 const s3Response = await s3Service.uploadFile(req.files.avatar, 'users', createdUser._id);
                 createdUser = await User.findByIdAndUpdate(
                     createdUser._id,
-                    { avatar: s3Response.Location },
-                    { new: true }
+                    
+                    { avatar: s3Response.Location }, // Location - шдях, де саме зберігається фото на AWS
+                    { new: true } // new - для того щоб повернути оновленій об'єкт
                 );
             }
 
