@@ -46,7 +46,7 @@ module.exports = {
                     createdUser._id,
                     
                     { avatar: s3Response.Location }, // Location - шдях, де саме зберігається фото на AWS
-                    { new: true } // new - для того щоб повернути оновленій об'єкт
+                    { new: true } // new - для того щоб повернути оновлений об'єкт
                 );
             }
 
