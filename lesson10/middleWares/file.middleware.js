@@ -8,7 +8,8 @@ module.exports = {
                 next();
                 return;
             }
-
+            
+            // деструктуризацію потрібно робити тільки після перевірки на наявність даних req.files
             const { name, size, mimetype } = req.files.avatar;
 
             if (size > PHOTO_MAX_SIZE) {
