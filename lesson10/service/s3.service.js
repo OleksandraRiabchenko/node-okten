@@ -16,7 +16,8 @@ const bucket = new S3({
     secretAccessKey: AWS_S3_SECRET_KEY
 });
 
-module.exports = {
+module.exports = { 
+    // itemType - cars, users, coctails ets.(папка де зберігається окрема сутність)
     uploadFile: (file, itemType, itemId) => {
         const { data, mimetype, name } = file;
 
