@@ -45,7 +45,7 @@ module.exports = {
                 createdUser = await User.findByIdAndUpdate(
                     createdUser._id,
                     
-                    { avatar: s3Response.Location }, // Location - шдях, де саме зберігається фото на AWS
+                    { avatar: s3Response.Location }, // Location - шдях, де саме зберігається фото на AWS (посилання на bucket)
                     { new: true } // new - для того щоб повернути оновлений об'єкт
                 );
             }
