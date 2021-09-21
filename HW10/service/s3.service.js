@@ -29,7 +29,8 @@ module.exports = {
                 Bucket: AWS_S3_NAME,
                 Body: data,
                 Key: fileName,
-                ContentType: mimetype
+                ContentType: mimetype,
+                ACL: 'public-read'
             })
             .promise();
     },
