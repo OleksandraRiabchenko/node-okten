@@ -22,8 +22,9 @@ module.exports = {
 
     getAllUser: async (req, res, next) => {
         try {
-            const users = await User.find();
-
+            // pagination !!!
+            const { perPage = 2, page = 1 } = req.query;
+            const users = await User.find().limit(+perPage).skip((+perPage * (page - 1)));
             res.json(users);
         } catch (e) {
             next(e);
