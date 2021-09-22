@@ -1,4 +1,5 @@
 module.exports = {
+    CORS_NOT_ALLOWED: 'Cors not allowed',
     EXIST_EMAIL: 'email is already exist',
     FILE_IS_BIG: 'File is too big',
     FORBIDDEN: 'Forbidden',
