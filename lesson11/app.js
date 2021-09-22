@@ -95,7 +95,7 @@ function _configureCors(origin, callback) {
     }
 
     if (!whiteList.includes(origin)) {
-        return callback(new ErrorHandler(403, 'CORS not allowed', false));
+        return callback(new ErrorHandler(403, 'CORS not allowed'), false);
     }
 
     return callback(null, true);
