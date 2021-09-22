@@ -1,6 +1,7 @@
 module.exports = {
     actionTokenEnum: require('./action_token.enum'),
     carConstants: require('./car.constants'),
+    cronItem: require('./cronItem'),
     dbTablesEnum: require('./db-tables.enum'),
     dbField: require('./dbField'),
     emailActions: require('./email-actions.enum'),
