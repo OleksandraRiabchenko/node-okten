@@ -63,6 +63,8 @@ app.listen(PORT, () => {
     console.log('App listen', PORT);
     // запускаємо cron, відпрацьовує кожні 5 сек, бо ми стільки вказали
     cronJobs();
+    // т.як defaultData.util - це Self-Invoking Functions, ми можемо її просто зареквайрити і апка її одразу виконає
+    require('./utils/defaultData.util');
 });
 
 // Кастомна ф-ція обробник помилок, приймає обов'язкові 4 аргумента саме в такій послідовності: next передає дані далі
