@@ -15,6 +15,8 @@ require('dotenv').config();
 
 const { ALLOWED_ORIGINS, DB_CONNECTION_URL, PORT } = require('./config/variables');
 const ErrorHandler = require('./errors/ErrorHandler');
+// реквайрим cron з папки і викликаємо ф-цію під час запуску апки app.listen...
+const cronJobs = require('./cron');
 
 const app = express();
 // ПОТРІБНО ЗРОБИТИ КОННЕКТ, АДРЕСА - mongodb://localhost:27017/назва_бази
@@ -59,6 +61,8 @@ app.listen(PORT, () => {
     // щоб побачити всі змінні які зберігаються в .env використовуємо process.env
     // console.log(process.env);
     console.log('App listen', PORT);
+    // запускаємо cron, відпрацьовує кожні 5 сек, бо ми стільки вказали
+    cronJobs();
 });
 
 // Кастомна ф-ція обробник помилок, приймає обов'язкові 4 аргумента саме в такій послідовності: next передає дані далі
