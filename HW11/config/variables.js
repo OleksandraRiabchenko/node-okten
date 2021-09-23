@@ -12,5 +12,7 @@ module.exports = {
     AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY || 'info',
     AWS_S3_SECRET_KEY: process.env.AWS_S3_SECRET_KEY || 'info',
 
-    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'http://localhost:3000'
+    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'http://localhost:3000',
+
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || '123qweASD!@%$'
 };

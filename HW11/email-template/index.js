@@ -21,6 +21,10 @@ module.exports = {
         templateName: 'forgot_password',
         subject: 'Forgot your password?'
     },
+    [emailActions.LAST_ACTIVITY]: {
+        templateName: 'last_activity',
+        subject: 'Your last activity was 10 days ago'
+    },
     [emailActions.UPDATE]: {
         templateName: 'update',
         subject: 'Your account updated'

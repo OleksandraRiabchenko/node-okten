@@ -10,6 +10,7 @@ require('dotenv').config();
 const { errorMessage, statusCodes, variables: { ALLOWED_ORIGINS, DB_CONNECTION_URL, PORT } } = require('./config');
 const { authRouter, carRouter, userRouter } = require('./routes');
 const { ErrorHandler } = require('./errors');
+const cronJobs = require('./cron');
 
 const app = express();
 
@@ -40,8 +41,10 @@ app.use('*', _notFoundError);
 app.use(_mainErrorHandler);
 
 app.listen(PORT, () => {
-    // console.log(process.env);
     console.log('App listen', PORT);
+
+    cronJobs();
+    require('./utils/defaultData.util');
 });
 
 function _notFoundError(err, req, res, next) {

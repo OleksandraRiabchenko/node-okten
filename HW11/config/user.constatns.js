@@ -17,5 +17,5 @@ module.exports = {
         PHOTO: 5 * 1024 * 1024
     },
     AWS_LINK: 'amazonaws.com/',
-    USERS: 'users'
+    USERS: 'users',
 };
